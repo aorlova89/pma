@@ -1,0 +1,17 @@
+.welcome {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+img {
+  width: 350px;
+  height: 350px;
+}
+
+h1 {
+  margin-bottom: 50px;
+}
+
+/*# sourceMappingURL=welcome.component.css.map */

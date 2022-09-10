@@ -1,0 +1,7 @@
+<div class="boards-list-wrapper" *ngIf="boardsList">
+  <div class="boards-list">
+    <board-card *ngFor="let board of boardsList" [boardCard]="board">
+    </board-card>
+    <add-board-card (addBoard)="onAddBoard($event)"></add-board-card>
+  </div>
+</div>

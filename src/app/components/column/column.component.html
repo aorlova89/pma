@@ -1,0 +1,12 @@
+<mat-card class="column">
+  <mat-icon class="add-task" matTooltip="Add new task" (click)="onAddTask()">library_add</mat-icon>
+  <mat-icon class="delete-column" matTooltip="Delete column" (click)="onDeleteColumn(column)">delete</mat-icon>
+  <mat-card-title class="title">{{column.title}}</mat-card-title>
+  <mat-card-content class="tasks-list">
+    <mat-card class="task" *ngFor="let task of tasksList$ | async" (click)="onTaskClick(task)">
+      {{task.title}}
+      <mat-icon class="delete-task" matTooltip="Delete task" (click)="onDeleteTask($event, task)">delete</mat-icon>
+     </mat-card>
+  </mat-card-content>
+</mat-card>
+

@@ -1,0 +1,28 @@
+.edit-profile-form {
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+  margin: 0 auto;
+  background-color: grey;
+  border-radius: 15px;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 20px 0;
+}
+
+h2 {
+  text-align: center;
+  margin: 25px 0;
+}
+
+button {
+  width: 150px;
+}
+
+.delete-btn {
+  margin: 0 auto;
+}

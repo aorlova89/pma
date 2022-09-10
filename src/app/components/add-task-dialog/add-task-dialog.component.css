@@ -1,0 +1,13 @@
+#title, #description {
+  width: 350px;
+}
+
+mat-dialog-actions {
+  justify-content: flex-end;
+}
+
+.cancel-btn {
+  margin-right: 10px;
+}
+
+/*# sourceMappingURL=add-task-dialog.component.css.map */

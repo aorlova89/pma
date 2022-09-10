@@ -1,0 +1,9 @@
+mat-dialog-actions {
+  justify-content: flex-end;
+}
+
+.cancel-btn {
+  margin-right: 10px;
+}
+
+/*# sourceMappingURL=add-column-dialog.component.css.map */

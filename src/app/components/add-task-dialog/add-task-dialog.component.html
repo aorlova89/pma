@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>{{ dialogTitle }}</h2>
+
+<mat-dialog-content>
+  <mat-form-field appearance="fill" id="title">
+    <mat-label>Task Title</mat-label>
+    <input matInput [(ngModel)]="title">
+  </mat-form-field>
+  <mat-form-field appearance="fill" id="description">
+    <mat-label>Task Description</mat-label>
+    <input matInput [(ngModel)]="description">
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="mat-raised-button cancel-btn" (click)="onCancel()">Cancel</button>
+  <button class="mat-raised-button mat-primary" (click)="onConfirm()">Ok</button>
+</mat-dialog-actions>

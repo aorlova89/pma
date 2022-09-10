@@ -1,0 +1,21 @@
+<form (submit)="onSubmit()" class="form-group signup-form">
+  <h2>Sign Up</h2>
+  <mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <input matInput type="text" class="name" id="name" placeholder="Name" [(ngModel)]="nameValue" name="nameValue">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Login</mat-label>
+    <input matInput type="text" class="login" id="login" placeholder="Login" [(ngModel)]="loginValue" name="loginValue">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Password</mat-label>
+    <input matInput type="password" class="password" id="password" placeholder="Password" [(ngModel)]="passwordValue" name="passwordValue">
+  </mat-form-field>
+  <button mat-stroked-button color="primary" type="submit" class="btn btn-dark login-btn">Sign Up</button>
+</form>
+
+<div class="form-bottom">
+  <span class="form-question">Already have an account?</span>
+  <a routerLink="/login" class="form-link">Log In</a>
+</div>

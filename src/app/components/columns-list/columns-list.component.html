@@ -1,0 +1,12 @@
+<div class="columns-list-wrapper" *ngIf="columnsList">
+<!--  <div class="columns-list">-->
+    <column
+      *ngFor="let column of columnsList"
+      [column]="column">
+      <!--      (onAddTaskClicked)="setShowAddTaskDialog($event)"-->
+      <!--    >-->
+
+    </column>
+<!--    <add-board-card (addBoard)="onAddBoard($event)"></add-board-card>-->
+<!--  </div>-->
+</div>

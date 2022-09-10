@@ -1,0 +1,13 @@
+mat-dialog-content {
+  width: 300px;
+}
+
+mat-dialog-actions {
+  justify-content: flex-end;
+}
+
+.cancel-btn {
+  margin-right: 10px;
+}
+
+/*# sourceMappingURL=modal.component.css.map */

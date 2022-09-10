@@ -1,0 +1,11 @@
+.top-menu {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.add-column-btn {
+  margin-left: 10px;
+}
+
+/*# sourceMappingURL=board-details-page.component.css.map */

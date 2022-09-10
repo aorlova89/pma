@@ -1,0 +1,20 @@
+.add-board-card {
+  width: 290px;
+  height: 150px;
+  border-radius: 15px;
+  opacity: 0.8;
+}
+
+mat-card-title {
+  text-align: center;
+}
+mat-card-content {
+  margin-top: 20px;
+}
+
+.add-board-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}

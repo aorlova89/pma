@@ -1,0 +1,17 @@
+<form (submit)="onSubmit()" class="form-group login-form">
+  <h2>Log In</h2>
+   <mat-form-field appearance="fill">
+    <mat-label>Login</mat-label>
+    <input matInput type="text" class="form-control login" id="floatingLogin" placeholder="Login" [(ngModel)]="loginValue" name="loginValue">
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Password</mat-label>
+    <input matInput type="password" class="form-control password" id="floatingPassword" placeholder="Password" [(ngModel)]="passwordValue" name="passwordValue">
+  </mat-form-field>
+  <button mat-stroked-button color="primary" type="submit" class="btn btn-dark login-btn">Log In</button>
+</form>
+
+<div class="form-bottom">
+  <span class="form-question">Don't have an account?</span>
+  <a routerLink="/signup" class="form-link">Sign Up</a>
+</div>

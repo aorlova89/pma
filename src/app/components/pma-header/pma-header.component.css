@@ -1,0 +1,19 @@
+.pma-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+a:link, a:visited {
+  text-decoration: none;
+  color: white;
+}
+
+.login-btn {
+  margin-right: 10px;
+}
+
+.login-btn, .signup-btn {
+  width: 80px;
+}
+
+/*# sourceMappingURL=pma-header.component.css.map */
