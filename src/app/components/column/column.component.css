@@ -1,21 +1,21 @@
 .column {
-  position: absolute;
-  bottom: 100px;
-  top: 180px;
   width: 290px;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
+  height: 85%;
 }
 
 mat-card-content {
+  height: 100%;
+  overflow: auto;
   width: 75%;
 }
 
-.title {
-  margin: 20px;
+mat-icon {
+  cursor: pointer;
 }
 
 .board-icons {
@@ -39,9 +39,43 @@ mat-card-content {
 .task {
   background-color: #616161;
   margin-bottom: 10px;
+  margin-right: 3px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
+}
+
+mat-card ::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #616161;
+}
+
+.col-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.column {
+  display: flex;
+  column-gap: 1.5em;
+}
+
+.icons-hidden {
+  display: none;
+}
+
+.icons-visible {
+  display: flex;
+}
+
+#save-update, #cancel-update {
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=column.component.css.map */

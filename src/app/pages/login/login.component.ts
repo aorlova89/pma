@@ -1,7 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import {KanbanService} from "../../services/kanban.service";
-import {Router} from "@angular/router";
-import {LocalStorageService} from "../../services/local-storage.service";
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from "@angular/router";
+import {first, tap} from "rxjs";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {FormBuilder, FormControl, Validators} from "@angular/forms";
+
+import {AuthenticationService} from "../../services/authentication.service";
+
+import * as globalActions from "../../store/actions/global.actions";
+import {Store} from "@ngrx/store";
+import * as fromRoot from "../../store/reducers/global.reducer";
+
 
 @Component({
   selector: 'login',
@@ -9,24 +17,47 @@ import {LocalStorageService} from "../../services/local-storage.service";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  loginValue: string = "";
-  passwordValue: string = "";
-  private token = "";
+  loginForm:any = FormControl;
 
-  constructor(private kanbanService: KanbanService, private router: Router, private localStorageService: LocalStorageService) { }
-
-  ngOnInit(): void {
-  }
-
-  onSubmit() {
-    this.kanbanService.signIn(this.loginValue, this.passwordValue).subscribe((res: any) => {
-      this.token = res.token;
-    });
-    if (this.token) {
-      this.localStorageService.setToken(this.token);
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private authenticationService: AuthenticationService,
+    private snackBar: MatSnackBar,
+    private formBuilder: FormBuilder,
+    private store: Store<fromRoot.AppState>
+  ) {
+    if (this.authenticationService.currentTokenValue) {
       this.router.navigate(['/boards']);
     }
   }
 
-}
+  ngOnInit(): void {
+    this.loginForm = this.formBuilder.group({
+      login: ['', [Validators.required]],
+      password: ['', [Validators.required]]
+    });
+  }
 
+  onSubmit() {
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    this.authenticationService.login(this.loginForm.controls.login.value, this.loginForm.controls.password.value)
+      .pipe(first(), tap(() => this.store.dispatch(globalActions.setLoadingState({ isLoading: true }))))
+      .subscribe(
+        data => {
+          this.router.navigate(['/boards']);
+        },
+        error => {
+          this.snackBar.open(error.toString(), 'close',{
+            duration: 5000,
+            verticalPosition: 'top'
+          });
+          this.store.dispatch(globalActions.setLoadingState({ isLoading: false }));
+        });
+
+  }
+
+}

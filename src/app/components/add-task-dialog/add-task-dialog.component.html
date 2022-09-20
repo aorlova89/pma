@@ -1,17 +1,19 @@
 <h2 mat-dialog-title>{{ dialogTitle }}</h2>
 
 <mat-dialog-content>
-  <mat-form-field appearance="fill" id="title">
+  <mat-form-field appearance="outline" id="title">
     <mat-label>Task Title</mat-label>
-    <input matInput [(ngModel)]="title">
+    <input matInput [formControl]="taskTitle">
+    <mat-error *ngIf="taskTitle.invalid">Title is required</mat-error>
   </mat-form-field>
-  <mat-form-field appearance="fill" id="description">
+  <mat-form-field appearance="outline" id="description">
     <mat-label>Task Description</mat-label>
-    <input matInput [(ngModel)]="description">
+    <input matInput [formControl]="taskDescription">
+    <mat-error *ngIf="taskDescription.invalid">Description is required</mat-error>
   </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button class="mat-raised-button cancel-btn" (click)="onCancel()">Cancel</button>
-  <button class="mat-raised-button mat-primary" (click)="onConfirm()">Ok</button>
+  <button mat-raised-button class="cancel-btn" (click)="onCancel()">Cancel</button>
+  <button [disabled]="taskTitle.invalid || taskDescription.invalid" mat-raised-button color="primary" (click)="onConfirm()">Ok</button>
 </mat-dialog-actions>

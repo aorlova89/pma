@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
+
 import {Board, BoardPayload} from "../models/board.model";
 import {Column, ColumnPayload} from "../models/column.model";
 import {SignUp} from "../models/signup.model";
-import {LocalStorageService} from "./local-storage.service";
 import {Task, TaskPayload} from "../models/task.model";
+import {UserPayload} from "../models/user";
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,111 +15,86 @@ import {Task, TaskPayload} from "../models/task.model";
 export class KanbanService {
   private REST_API_SERVER = "https://salty-earth-19583.herokuapp.com";
 
-  constructor(private httpClient: HttpClient, private localStorageService: LocalStorageService) { }
+  constructor(private httpClient: HttpClient) { }
 
-  token = this.localStorageService.getTokenValue();
-
-  signInHeaders = new HttpHeaders({
-    'Content-Type': 'application/json'
-  });
-
-  requestOptions = { headers: this.signInHeaders };
-
-  private buildRequestHeaders(token: any): Object {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-    return { headers: headers};
-  }
-
-  // auth
-  public signIn(login: string, password: string): Observable<Object> {
-    return this.httpClient.post<Object>(`${this.REST_API_SERVER}/signin`,
-      {login: login, password: password},
-      this.requestOptions);
-  }
-
-  public signUp(signUpData: SignUp): Observable<object> {
-    return this.httpClient.post<Object>(`${this.REST_API_SERVER}/signup`,
+  public signUp(signUpData: SignUp): Observable<UserPayload> {
+    return this.httpClient.post<UserPayload>(`${this.REST_API_SERVER}/signup`,
       signUpData,
-      this.requestOptions);
+      { headers: new HttpHeaders({'Content-Type': 'application/json'})}
+    );
   }
 
+  //user endpoints
   public getUsers() {
-    return this.httpClient.get(`${this.REST_API_SERVER}/users`,
-      this.buildRequestHeaders(this.token));
+    return this.httpClient.get(`${this.REST_API_SERVER}/users`);
   }
 
-  //boards
+  public updateUser(userId: string, user: UserPayload): Observable<UserPayload> {
+    return this.httpClient.put<UserPayload>(`${this.REST_API_SERVER}/users/${userId}`, user);
+  }
+
+  public deleteUser(userId: string): Observable<any> {
+    return this.httpClient.delete(`${this.REST_API_SERVER}/users/${userId}`);
+  }
+
+  //boards endpoints
   public getBoards(): Observable<Board[]> {
-    return this.httpClient.get<Board[]>(`${this.REST_API_SERVER}/boards`,
-      this.buildRequestHeaders(this.token));
+    return this.httpClient.get<Board[]>(`${this.REST_API_SERVER}/boards`);
+  }
+
+  public getBoardById(boardId: string): Observable<Board> {
+    return this.httpClient.get<Board>(`${this.REST_API_SERVER}/boards/${boardId}`);
   }
 
   public createBoard(boardData: BoardPayload): Observable<Board> {
-    return this.httpClient.post<Board>(`${this.REST_API_SERVER}/boards`,
-      boardData,
-      this.buildRequestHeaders(this.token));
+    return this.httpClient.post<Board>(`${this.REST_API_SERVER}/boards`, boardData);
   }
 
   public editBoard(boardId: string, data: object, token: string): Observable<Board> {
-    return this.httpClient.put<Board>(`${this.REST_API_SERVER}/boards/${boardId}`,
-      data,
-      this.buildRequestHeaders(token));
+    return this.httpClient.put<Board>(`${this.REST_API_SERVER}/boards/${boardId}`, data);
   }
 
   public deleteBoard(boardId: string): Observable<Object> {
-    return this.httpClient.delete(`${this.REST_API_SERVER}/boards/${boardId}`,
-      {headers: new HttpHeaders({'Authorization': `Bearer ${this.token}` })}
-    );
+    return this.httpClient.delete(`${this.REST_API_SERVER}/boards/${boardId}`);
   }
 
-  //columns
+  //columns endpoints
   public getColumns(boardId: string): Observable<Column[]> {
-    return this.httpClient.get<Column[]>(`${this.REST_API_SERVER}/boards/${boardId}/columns`,
-      this.buildRequestHeaders(this.token));
+    return this.httpClient.get<Column[]>(`${this.REST_API_SERVER}/boards/${boardId}/columns`);
   }
+
+  // public getColumnDetails(boardId: string, columnId: string): Observable<ColumnDetails> {
+  //   return this.httpClient.get<ColumnDetails>(`${this.REST_API_SERVER}/boards/${boardId}/columns/${columnId}`);
+  // }
 
   public createColumn(boardId: string, columnData: ColumnPayload): Observable<Column> {
-    return this.httpClient.post<Column>(`${this.REST_API_SERVER}/boards/${boardId}/columns`,
-      columnData,
-      this.buildRequestHeaders(this.token));
+    return this.httpClient.post<Column>(`${this.REST_API_SERVER}/boards/${boardId}/columns`, columnData);
   }
 
-  public editColumn(boardId: string, columnId: string, columnData: Column, token: string): Observable<object> {
-    return this.httpClient.put(`${this.REST_API_SERVER}/boards/${boardId}/columns/${columnId}`,
-      columnData,
-      this.buildRequestHeaders(token));
+  public editColumn(boardId: string, columnId: string, columnData: ColumnPayload): Observable<Column> {
+    return this.httpClient.put<Column>(`${this.REST_API_SERVER}/boards/${boardId}/columns/${columnId}`, columnData);
   }
 
   public deleteColumn(boardId: string, columnId: string): Observable<object> {
-    return this.httpClient.delete(`${this.REST_API_SERVER}/boards/${boardId}/columns/${columnId}`,
-      {headers: new HttpHeaders({'Authorization': `Bearer ${this.token}` })}
-    );
+    return this.httpClient.delete(`${this.REST_API_SERVER}/boards/${boardId}/columns/${columnId}`);
   }
 
-  //tasks
+  //tasks endpoints
   public getTasks(boardId: string, columnId: string): Observable<Task[]> {
-    return this.httpClient.get<Task[]>(`${this.REST_API_SERVER}/boards/${boardId}/columns/${columnId}/tasks`,
-      this.buildRequestHeaders(this.token));
+    return this.httpClient.get<Task[]>(`${this.REST_API_SERVER}/boards/${boardId}/columns/${columnId}/tasks`);
   }
 
   public addTask(boardId: string, columnId: string, taskData: TaskPayload): Observable<Task> {
-    return this.httpClient.post<Task>(`${this.REST_API_SERVER}/boards/${boardId}/columns/${columnId}/tasks`,
-      taskData,
-      this.buildRequestHeaders(this.token));
+    return this.httpClient.post<Task>(`${this.REST_API_SERVER}/boards/${boardId}/columns/${columnId}/tasks`, taskData);
   }
 
   public editTask(boardId: string, columnId: string, taskId: string, taskData: TaskPayload): Observable<Task> {
     return this.httpClient.put<Task>(`${this.REST_API_SERVER}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
-      taskData,
-      this.buildRequestHeaders(this.token));
+      taskData);
   }
 
   public deleteTask(boardId: string, columnId: string, taskId: string) {
-    return this.httpClient.delete(`${this.REST_API_SERVER}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
-      {headers: new HttpHeaders({'Authorization': `Bearer ${this.token}` })});
+    return this.httpClient.delete(`${this.REST_API_SERVER}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`);
   }
 
 }

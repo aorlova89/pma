@@ -1,18 +1,32 @@
-<form (submit)="onSubmit()" class="form-group signup-form">
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="form-group signup-form">
   <h2>Sign Up</h2>
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="outline">
     <mat-label>Name</mat-label>
-    <input matInput type="text" class="name" id="name" placeholder="Name" [(ngModel)]="nameValue" name="nameValue">
+    <input matInput
+           type="text"
+           placeholder="Name"
+           formControlName="name">
+    <mat-error *ngIf="signupForm.get('name').hasError('required')">Name is required</mat-error>
   </mat-form-field>
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="outline">
     <mat-label>Login</mat-label>
-    <input matInput type="text" class="login" id="login" placeholder="Login" [(ngModel)]="loginValue" name="loginValue">
+    <input matInput
+           type="text"
+           placeholder="Login"
+           formControlName="login">
+    <mat-error *ngIf="signupForm.get('login').hasError('required')">Login is required</mat-error>
   </mat-form-field>
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="outline">
     <mat-label>Password</mat-label>
-    <input matInput type="password" class="password" id="password" placeholder="Password" [(ngModel)]="passwordValue" name="passwordValue">
+    <input matInput
+           type="password"
+           placeholder="Password"
+           formControlName="password">
+    <mat-error *ngIf="signupForm.get('password').hasError('required')">Password is required</mat-error>
+    <mat-error *ngIf="signupForm.get('password').hasError('minlength')">Min length 4 char</mat-error>
   </mat-form-field>
-  <button mat-stroked-button color="primary" type="submit" class="btn btn-dark login-btn">Sign Up</button>
+
+  <button mat-raised-button color="primary" type="submit" class="btn btn-dark login-btn">Sign Up</button>
 </form>
 
 <div class="form-bottom">

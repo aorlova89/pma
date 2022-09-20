@@ -1,0 +1,19 @@
+.card {
+  width: 300px;
+}
+
+.col-title {
+  display: flex;
+  align-items: baseline;
+  border: 1px solid red;
+}
+
+.icons-hidden {
+  display: none;
+}
+
+.icons-visible {
+  display: flex;
+}
+
+/*# sourceMappingURL=tmp.component.css.map */

@@ -1,5 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {FormControl, Validators} from "@angular/forms";
+
 
 @Component({
   selector: 'add-task-dialog',
@@ -7,6 +9,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
   styleUrls: ['./add-task-dialog.component.scss']
 })
 export class AddTaskDialogComponent implements OnInit {
+  taskTitle = new FormControl('', [Validators.required]);
+  taskDescription = new FormControl('', [Validators.required]);
   dialogTitle = '';
   title = '';
   description = '';
@@ -14,8 +18,10 @@ export class AddTaskDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<any>,
               @Inject(MAT_DIALOG_DATA) public data: {dialogTitle: string, title: string, description: string}) {
     this.dialogTitle = data.dialogTitle;
-    this.title = data.title;
-    this.description = data.description;
+    this.taskTitle.setValue(data.title);
+    this.taskDescription.setValue(data.description);
+    // this.title = data.title;
+    // this.description = data.description;
   }
 
   ngOnInit(): void {
@@ -26,7 +32,7 @@ export class AddTaskDialogComponent implements OnInit {
   }
 
   onConfirm() {
-    this.dialogRef.close({title: this.title, description: this.description});
+    this.dialogRef.close({title: this.taskTitle.value, description: this.taskDescription.value});
   }
 
 }

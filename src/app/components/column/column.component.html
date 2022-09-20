@@ -1,12 +1,59 @@
-<mat-card class="column">
+<mat-card class="column" (click)="handleColumnTitleClick($event)" cdkDrag>
   <mat-icon class="add-task" matTooltip="Add new task" (click)="onAddTask()">library_add</mat-icon>
   <mat-icon class="delete-column" matTooltip="Delete column" (click)="onDeleteColumn(column)">delete</mat-icon>
-  <mat-card-title class="title">{{column.title}}</mat-card-title>
-  <mat-card-content class="tasks-list">
-    <mat-card class="task" *ngFor="let task of tasksList$ | async" (click)="onTaskClick(task)">
-      {{task.title}}
-      <mat-icon class="delete-task" matTooltip="Delete task" (click)="onDeleteTask($event, task)">delete</mat-icon>
-     </mat-card>
+  <div class="col-title">
+    <mat-form-field appearance="outline" class="col-title" >
+      <input matInput [(ngModel)]="columnTitle" class="input">
+    </mat-form-field>
+    <div id="icons" [ngClass]="editable ? 'icons-visible' : 'icons-hidden'">
+      <mat-icon id="save-update" matTooltip="Update column Title">check</mat-icon>
+      <mat-icon id="cancel-update" matTooltip="Cancel changes">close</mat-icon>
+    </div>
+  </div>
+
+  <mat-card-content
+    cdkDropList
+    (cdkDropListDropped)="drop($event)"
+    [cdkDropListData]="tasks"
+    #tasksList="cdkDropList"
+    [cdkDropListConnectedTo]="columnIds"
+    class="tasks-list"
+    id={{column.id}}
+  >
+    <div
+      *ngFor="let task of tasks"
+      cdkDrag
+    >
+      <mat-card class="task" *ngIf="task.columnId === column.id" (click)="onTaskClick(task)">
+        {{task.title}}
+        <mat-icon class="delete-task" matTooltip="Delete task" (click)="onDeleteTask($event, task)">delete</mat-icon>
+      </mat-card>
+    </div>
   </mat-card-content>
 </mat-card>
 
+<!--<mat-card-content-->
+<!--  cdkDropList-->
+<!--  (cdkDropListDropped)="drop($event)"-->
+<!--  [cdkDropListData]="tasks"-->
+<!--  #tasksList="cdkDropList"-->
+<!--  [cdkDropListConnectedTo]="[tasksList]"-->
+<!--  class="tasks-list"-->
+<!--&gt;-->
+
+<!--<div class="col-md-3" *ngFor="let week of weeks">-->
+<!--  <div class="drag-container">-->
+<!--    <div class="section-heading">Week {{week.id}}</div>-->
+
+<!--    <div-->
+<!--      cdkDropList-->
+<!--      id="{{week.id}}"-->
+<!--      [cdkDropListData]="week.weeklist"-->
+<!--      [cdkDropListConnectedTo]="connectedTo"-->
+<!--      class="item-list"-->
+<!--      (cdkDropListDropped)="drop($event)">-->
+
+<!--      <div class="item-box" *ngFor="let weekItem of week.weeklist" cdkDrag>Week {{week.id}} {{weekItem}}</div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->

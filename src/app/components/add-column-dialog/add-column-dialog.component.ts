@@ -1,5 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {FormControl, Validators} from "@angular/forms";
 
 @Component({
   selector: 'add-column-dialog',
@@ -7,7 +8,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
   styleUrls: ['./add-column-dialog.component.scss']
 })
 export class AddColumnDialogComponent implements OnInit {
-  title = '';
+  columnTitle = new FormControl('', [Validators.required]);
 
   constructor(public dialogRef: MatDialogRef<any>,
               @Inject(MAT_DIALOG_DATA) public data: {title: string}) { }
@@ -20,7 +21,7 @@ export class AddColumnDialogComponent implements OnInit {
   }
 
   onConfirm() {
-    this.dialogRef.close(this.title);
+    this.dialogRef.close(this.columnTitle.value);
   }
 
 }

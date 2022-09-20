@@ -12,11 +12,18 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "app",
+      "prefix": "",
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "ru": "messages.ru.xlf"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "localize": false,
             "outputPath": "dist/project-management-application",
             "index": "src/index.html",
             "main": "src/main.ts",

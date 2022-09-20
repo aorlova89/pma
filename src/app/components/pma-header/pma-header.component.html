@@ -1,11 +1,11 @@
-<mat-toolbar color="primary" class="pma-header" *ngIf="tokenExists|async; else nobodyLoggedIn">
-  <a href="#">Welcome, {{loginValue}}</a>
+<mat-toolbar color="primary" class="pma-header" *ngIf="currentToken|async; else nobodyLoggedIn">
+  <a href="#">Welcome, {{currentLogin}}</a>
   <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon>menu</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
     <button routerLink="/edit" mat-menu-item>Edit Profile</button>
-    <button (click)="logout()" routerLink="/welcome" mat-menu-item>Logout</button>
+    <button (click)="handleLogoutClick()" routerLink="/welcome" mat-menu-item>Logout</button>
   </mat-menu>
 </mat-toolbar>
 

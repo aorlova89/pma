@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {LocalStorageService} from "../../services/local-storage.service";
+import {Store} from "@ngrx/store";
+import * as reducer from "../../store/reducers/pma.reducer";
+import {AuthenticationService} from "../../services/authentication.service";
 
 
 @Component({
@@ -8,18 +10,25 @@ import {LocalStorageService} from "../../services/local-storage.service";
   styleUrls: ['./pma-header.component.scss']
 })
 export class PmaHeaderComponent implements OnInit {
-  tokenExists = this.localStorageService.getToken();
-  loginValue = '';
+  currentToken;
+  currentLogin = '';
 
-  constructor(private localStorageService: LocalStorageService) { }
-
-  ngOnInit(): void {
-    //todo
-    this.tokenExists.subscribe(() => this.loginValue = this.localStorageService.getLoginValue());
+  constructor(private store: Store<reducer.AppState>,
+              private authenticationService: AuthenticationService,
+  ) {
+    this.currentToken = this.authenticationService.currentToken;
   }
 
-  logout() {
-    this.localStorageService.clearToken();
+  ngOnInit(): void {
+    this.currentToken.subscribe(() => {
+      if (this.authenticationService.currentTokenValue) {
+        this.currentLogin = this.authenticationService.currentUserLogin;
+      }
+    });
+  }
+
+  handleLogoutClick() {
+    this.authenticationService.logout();
   }
 
 }

@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Column} from "../../models/column.model";
 import {Store} from "@ngrx/store";
 import * as reducer from "../../store/reducers/pma.reducer";
+
+import {Column} from "../../models/column.model";
 
 
 @Component({
@@ -12,9 +13,10 @@ import * as reducer from "../../store/reducers/pma.reducer";
 export class ColumnsListComponent implements OnInit {
   @Input() columnsList: Column[] | null = [];
 
-  constructor(private store: Store<reducer.AppState>) { }
+  constructor(private store: Store<reducer.AppState>) {
+    this.store.select(reducer.getColumns).subscribe(res =>  this.columnsList = res);
+  }
 
   ngOnInit(): void {
   }
-
 }

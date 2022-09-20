@@ -1,9 +1,26 @@
 .top-menu {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
 }
 
 .add-column-btn {
   margin-left: 10px;
+}
+
+columns-list {
+  position: absolute;
+  bottom: 0;
+  top: 80px;
+  right: 0;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  column-gap: 1.5em;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.example-box {
+  display: flex;
+  column-gap: 1em;
 }

@@ -1,36 +1,33 @@
-<form (submit)="onSubmit()" class="form-group edit-profile-form">
+<form [formGroup]="editProfileForm" (ngSubmit)="onSubmit()" class="form-group edit-profile-form">
   <h2>Edit User Profile</h2>
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="outline">
     <mat-label>Login</mat-label>
-    <input matInput type="text" class="form-control login" id="floatingLogin" placeholder="Login" [(ngModel)]="loginValue" name="loginValue">
+    <input matInput
+           type="text"
+           placeholder="Login"
+           formControlName="login"
+           name="loginValue">
   </mat-form-field>
-  <!--  <mat-form-field appearance="fill">-->
-  <!--    <mat-label>Password</mat-label>-->
-  <!--    <input matInput type="password" class="form-control password" id="floatingPassword" placeholder="Password" [(ngModel)]="passwordValue" name="passwordValue">-->
-  <!--  </mat-form-field>-->
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="outline">
     <mat-label>New Password</mat-label>
     <input matInput
            type="password"
-           class="form-control password"
-           id="newPasswordValue"
            placeholder="New Password"
-           [(ngModel)]="newPasswordValue"
-           name="newPasswordValue">
+           formControlName="newPassword">
+    <mat-error *ngIf="editProfileForm.get('newPassword').hasError('required')">Password is required</mat-error>
+    <mat-error *ngIf="editProfileForm.get('newPassword').hasError('minlength')">Min length 4 char</mat-error>
   </mat-form-field>
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="outline">
     <mat-label>Repeat New Password</mat-label>
     <input matInput
            type="password"
-           class="form-control password"
-           id="repeatedPasswordValue"
            placeholder="Repeat New Password"
-           [(ngModel)]="repeatedPasswordValue"
-           name="repeatedPasswordValue">
+           formControlName="repeatedPassword">
+    <mat-error *ngIf="editProfileForm.get('repeatedPassword').hasError('required')">Please repeat new password</mat-error>
   </mat-form-field>
   <button (click)="openConfirmationDialog()" mat-flat-button color="warn" type="button" class="delete-btn">Delete Profile</button>
   <div class="buttons">
-    <button mat-flat-button color="primary" type="submit" class="login-btn">Save Changes</button>
-    <button mat-flat-button color="primary" type="button" class="login-btn">Cancel</button>
+    <button mat-raised-button type="button" (click)="cancelEdit()" class="login-btn">Cancel</button>
+    <button mat-raised-button type="submit" color="primary" class="login-btn">Save Changes</button>
   </div>
 </form>

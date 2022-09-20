@@ -3,8 +3,6 @@
   flex-direction: column;
   width: 450px;
   margin: 0 auto;
-  background-color: grey;
-  border-radius: 15px;
 }
 
 .buttons {
@@ -25,4 +23,19 @@ button {
 
 .delete-btn {
   margin: 0 auto;
+}
+
+// mat-input outline color
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: black!important;
+}
+
+// mat-input error outline color
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
+  color: red !important;
+  opacity: 0.8 !important;
+}
+
+::ng-deep .mat-form-field-label {
+  color: rgba(0,0,0,.6)!important;
 }

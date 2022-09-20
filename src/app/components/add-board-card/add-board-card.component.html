@@ -2,11 +2,11 @@
   <mat-card-title>Add new board</mat-card-title>
   <mat-card-content>
     <form (submit)="onSubmit()" class="add-board-form">
-      <mat-form-field appearance="fill">
+      <mat-form-field appearance="outline">
         <mat-label>Board Title</mat-label>
-        <input matInput placeholder="Board Title" [(ngModel)]="newBoardTitle" name="boardTitle">
+        <input matInput placeholder="Board Title" [formControl]="newBoardTitle" name="boardTitle">
       </mat-form-field>
-      <button mat-raised-button color="primary">Add new board</button>
+      <button [disabled]="!newBoardTitle.value" mat-raised-button color="primary">Add new board</button>
     </form>
   </mat-card-content>
 </mat-card>

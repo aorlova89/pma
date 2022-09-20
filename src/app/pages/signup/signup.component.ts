@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {KanbanService} from "../../services/kanban.service";
 import {Router} from "@angular/router";
+import {first} from "rxjs";
+import {MatSnackBar} from "@angular/material/snack-bar";
+
+import {KanbanService} from "../../services/kanban.service";
+import {AuthenticationService} from "../../services/authentication.service";
+import {UserPayload} from "../../models/user";
+import {FormBuilder, FormControl, Validators} from "@angular/forms";
+
 
 @Component({
   selector: 'signup',
@@ -8,26 +15,56 @@ import {Router} from "@angular/router";
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
-  nameValue: string = "";
-  loginValue: string = "";
-  passwordValue: string = "";
-  private token = "";
+  signupForm:any = FormControl;
 
-  constructor(private kanbanService: KanbanService, private router: Router) { }
+  loading = false;
+  submitted = false;
+
+  constructor(private kanbanService: KanbanService,
+              private authenticationService: AuthenticationService,
+              private snackBar: MatSnackBar,
+              private router: Router,
+              private formBuilder: FormBuilder,) {
+    if (this.authenticationService.currentTokenValue) {
+      this.router.navigate(['/']);
+    }
+  }
 
   ngOnInit(): void {
+    this.signupForm = this.formBuilder.group({
+      name: ['', [Validators.required]],
+      // name1: ['', [Validators.required]],
+      login: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(4)]]
+    });
   }
 
   onSubmit() {
-    this.kanbanService.signUp({name: this.nameValue, login: this.loginValue, password: this.passwordValue})
-      .subscribe((res: any) => {
-      this.token = res.token;
-    });
-    if (this.token) {
-      console.log(this.token)
-      localStorage.setItem("token", this.token);
-      this.router.navigate(['/boards']);
+    // this.submitted = true;
+    // this.loading = true;
+    if (this.signupForm.invalid) {
+      return;
     }
+
+    this.kanbanService.signUp({
+      name: this.signupForm.controls.name.value,
+      login: this.signupForm.controls.login.value,
+      password: this.signupForm.controls.password.value
+    })
+      .pipe(first())
+      .subscribe((res: UserPayload) => {
+          this.snackBar.open('Registration is completed, please login', 'close',{
+            duration: 5000,
+            verticalPosition: 'top'
+          });
+        this.router.navigate(['/login']);
+      },
+      error => {
+        this.snackBar.open(error.toString(), 'close',{
+          duration: 5000,
+          verticalPosition: 'top'
+        });
+      });
   }
 
 }

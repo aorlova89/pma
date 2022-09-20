@@ -1,13 +1,14 @@
 <h2 mat-dialog-title>Add Column</h2>
 
 <mat-dialog-content>
-  <mat-form-field appearance="fill">
+  <mat-form-field appearance="outline">
     <mat-label>Column Title</mat-label>
-    <input matInput [(ngModel)]="title">
+    <input matInput [formControl]="columnTitle">
+    <mat-error *ngIf="columnTitle.invalid">Title is required</mat-error>
   </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button class="mat-raised-button cancel-btn" (click)="onCancel()">Cancel</button>
-  <button class="mat-raised-button mat-primary" (click)="onConfirm()">Ok</button>
+  <button mat-raised-button class="cancel-btn" (click)="onCancel()">Cancel</button>
+  <button mat-raised-button [disabled]="columnTitle.invalid" color="primary" (click)="onConfirm()">Ok</button>
 </mat-dialog-actions>

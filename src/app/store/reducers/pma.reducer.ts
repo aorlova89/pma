@@ -1,24 +1,19 @@
-import {Board} from "../../models/board.model";
+import { createFeatureSelector, createReducer, createSelector, on } from "@ngrx/store";
+
 import * as pmaActions from '../actions/pma.actions';
-import {createFeatureSelector, createReducer, createSelector, on} from "@ngrx/store";
-import {addBoard} from "../actions/pma.actions";
-import {Column} from "../../models/column.model";
-import {state} from "@angular/animations";
-import {Task} from "../../models/task.model";
+import { Board } from "../../models/board.model";
+import { Column } from "../../models/column.model";
+import { Task } from "../../models/task.model";
 
 
 export interface AppState {
   boards: Board[];
   columns: Column[];
-  currentBoardId: string | undefined;
+  currentBoardId: string;
   tasks: Task[];
-  // modal: {isOpened: boolean, type?: Modals}
 }
 
-export const initialState: AppState = {
-  boards: [], columns: [], currentBoardId: '', tasks: []
-  // modal: {isOpened: false}
-}
+export const initialState: AppState = { boards: [], columns: [], currentBoardId: '', tasks: [] }
 
 export const appReducer = createReducer(
   initialState,
@@ -39,7 +34,7 @@ export const appReducer = createReducer(
   ),
   on(pmaActions.loadColumnsSuccess, (state, {boardId, columns}) => ({
       ...state,
-      columns: columns,
+      columns: [...columns].sort((a, b) => a.order - b.order),
       currentBoardId: boardId
     })
   ),
@@ -53,9 +48,16 @@ export const appReducer = createReducer(
       columns: state.columns.filter(el => el.id !== columnId)
     })
   ),
+  on(pmaActions.updateColumnSuccess, (state, { column }) => ({
+      ...state,
+      column: state.columns
+        .map(el => el.id === column.id ? column : el)
+        .sort((a, b) => a.order - b.order)
+    })
+  ),
   on(pmaActions.loadTasksSuccess, (state, { tasks }) => ({
       ...state,
-      tasks: tasks
+      tasks: [...state.tasks, ...tasks].sort((a, b) => a.order - b.order)
     })
   ),
   on(pmaActions.addTaskSuccess, (state, { task }) => ({
@@ -70,14 +72,15 @@ export const appReducer = createReducer(
   ),
   on(pmaActions.updateTaskSuccess, (state, { task }) => ({
       ...state,
-    //todo doesn't work
-      tasks: [...state.tasks, state.tasks[Number(task.id)] = task]
+      tasks: state.tasks
+        .map(el => el.id === task.id ? task : el)
+        .sort((a, b) => a.order - b.order)
     })
-  ),
+  )
 );
 
-
 export const getAppState = createFeatureSelector<AppState>('pma');
+
 export const getBoards = createSelector(
   getAppState,
   (state: AppState) => state.boards
@@ -90,15 +93,30 @@ export const getColumns = createSelector(
 
 export const getBoardTitle = createSelector(
   getAppState,
-  (state: AppState) => state.boards.find(board => board.id === state.currentBoardId)?.title
+  (state: AppState) => {
+    return state.boards.find(board => board.id === state.currentBoardId)?.title}
 );
 
 export const getTasks = createSelector(
   getAppState,
   (state: AppState) => state.tasks
 );
+//
+// export const selectTasks = (state: AppState) => state.tasks;
+//
+// // export const getTasksById = (taskId: string) =>
+// //   createSelector(
+// //     selectTasks,
+// //     (tasks) =>
+// //       tasks.map(el => el.id === taskId)
+// //   )
 
 export const getCurrentBoardId = createSelector(
   getAppState,
   (state: AppState) => state.currentBoardId
 );
+//
+// export const getIsLoading = createSelector(
+//   getAppState,
+//   (state) => state.isLoading
+// );

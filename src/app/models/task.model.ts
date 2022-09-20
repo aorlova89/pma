@@ -15,4 +15,5 @@ export interface TaskPayload {
   userId: string;
   order?: number;
   boardId?: string;
+  columnId?: string;
 }

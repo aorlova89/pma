@@ -1,7 +1,12 @@
-<div class="board-columns-container">
-  <div class="top-menu">
-    <h1 [innerText]="boardName"></h1>
-    <button (click)="openAddColumnDialog()" class="add-column-btn" mat-raised-button color="primary">Add Column</button>
-  </div>
-  <columns-list [columnsList]="columnsList$ | async"></columns-list>
+<div class="top-menu">
+  <h1 [innerText]="boardName"></h1>
+  <button (click)="openAddColumnDialog()" class="add-column-btn" mat-raised-button color="primary">Add Column</button>
 </div>
+
+<columns-list
+  [columnsList]="columnsList$ | async"
+  cdkDropList
+  cdkDropListOrientation="horizontal"
+  (cdkDropListDropped)="drop($event)"
+></columns-list>
+

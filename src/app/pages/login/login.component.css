@@ -3,8 +3,6 @@
   flex-direction: column;
   width: 450px;
   margin: 0 auto;
-  background-color: grey;
-  border-radius: 15px;
 }
 
 .form-bottom {
@@ -18,8 +16,17 @@ h2 {
   margin-bottom: 25px;
 }
 
-button {
-  font-weight: bold;
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: black !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
+  color: red !important;
+  opacity: 0.8 !important;
+}
+
+::ng-deep .mat-form-field-label {
+  color: rgba(0, 0, 0, 0.6) !important;
 }
 
 /*# sourceMappingURL=login.component.css.map */
