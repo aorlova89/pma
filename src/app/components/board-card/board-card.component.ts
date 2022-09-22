@@ -1,11 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Board} from "../../models/board.model";
+import {Router} from "@angular/router";
 import {Store} from "@ngrx/store";
+import {MatDialog} from "@angular/material/dialog";
+
+import {Board} from "../../models/board.model";
+import {ConfirmDialogModel, ModalComponent} from "../modal/modal.component";
 import * as reducer from "../../store/reducers/pma.reducer";
 import * as AppActions from "../../store/actions/pma.actions";
-import {Router} from "@angular/router";
-import {ConfirmDialogModel, ModalComponent} from "../modal/modal.component";
-import {MatDialog} from "@angular/material/dialog";
 
 
 @Component({

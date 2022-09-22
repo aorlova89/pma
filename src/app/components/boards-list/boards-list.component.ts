@@ -1,8 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Store} from "@ngrx/store";
+
 import {Board, BoardPayload} from "../../models/board.model";
 import * as AppActions from "../../store/actions/pma.actions";
-import {Store} from "@ngrx/store";
 import * as reducer from "../../store/reducers/pma.reducer";
+
 
 @Component({
   selector: 'boards-list',

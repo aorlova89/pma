@@ -1,5 +1,5 @@
 <mat-toolbar color="primary" class="pma-header" *ngIf="currentToken|async; else nobodyLoggedIn">
-  <a href="#">Welcome, {{currentLogin}}</a>
+  <a routerLink="/boards">Welcome, {{currentLogin}}</a>
   <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon>menu</mat-icon>
   </button>
@@ -11,7 +11,7 @@
 
 <ng-template #nobodyLoggedIn>
   <mat-toolbar color="primary" class="pma-header">
-    <a href="#">Welcome to Project Management Application</a>
+    <a routerLink="/boards">Welcome to Project Management Application</a>
     <div class="auth-buttons">
       <button routerLink="/login" class="login-btn" mat-stroked-button>Log In</button>
       <button routerLink="/signup" class="signup-btn" mat-stroked-button>Sign Up</button>

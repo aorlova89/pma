@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormControl, Validators} from "@angular/forms";
+import {FormControl} from "@angular/forms";
 
 import {BoardPayload} from "../../models/board.model";
 
@@ -19,13 +19,13 @@ export class AddBoardCardComponent implements OnInit {
   }
 
   onSubmit() {
-    this.addBoard.emit({
-      // todo
-      title: this.newBoardTitle.value + '',
-      description: `${this.newBoardTitle.value} description`
-    });
-
-    this.newBoardTitle.reset();
+    if (this.newBoardTitle.value) {
+      this.addBoard.emit({
+        title: this.newBoardTitle.value,
+        description: `${this.newBoardTitle.value} description`
+      });
+      this.newBoardTitle.reset();
+    }
   }
 
 }

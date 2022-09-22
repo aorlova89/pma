@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
-import * as reducer from "../../store/reducers/pma.reducer";
 
+import * as reducer from "../../store/reducers/pma.reducer";
 import {Column} from "../../models/column.model";
 
 

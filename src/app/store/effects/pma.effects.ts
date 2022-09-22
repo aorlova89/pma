@@ -1,12 +1,13 @@
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import * as fromActions from "../actions/pma.actions";
-import * as globalActions from "../actions/global.actions";
-import * as fromRoot from '../reducers/global.reducer';
-import {Injectable} from "@angular/core";
-import {KanbanService} from "../../services/kanban.service";
 import {catchError, delay, finalize, map, mergeMap, of, switchMap, switchMapTo, tap} from 'rxjs';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import { Store } from "@ngrx/store";
+import {Injectable} from "@angular/core";
+
+import * as fromActions from "../actions/pma.actions";
+import * as globalActions from "../actions/global.actions";
+import * as fromRoot from '../reducers/global.reducer';
+import {KanbanService} from "../../services/kanban.service";
 
 
 @Injectable()
@@ -223,6 +224,4 @@ export class AppEffects {
     )
   );
 
-
 }
-

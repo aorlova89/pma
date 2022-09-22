@@ -1,13 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {first, tap} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
+import {Store} from "@ngrx/store";
 
 import {AuthenticationService} from "../../services/authentication.service";
-
 import * as globalActions from "../../store/actions/global.actions";
-import {Store} from "@ngrx/store";
 import * as fromRoot from "../../store/reducers/global.reducer";
 
 
@@ -44,8 +42,9 @@ export class LoginComponent implements OnInit {
       return;
     }
 
+    this.store.dispatch(globalActions.setLoadingState({ isLoading: true }));
+
     this.authenticationService.login(this.loginForm.controls.login.value, this.loginForm.controls.password.value)
-      .pipe(first(), tap(() => this.store.dispatch(globalActions.setLoadingState({ isLoading: true }))))
       .subscribe(
         data => {
           this.router.navigate(['/boards']);

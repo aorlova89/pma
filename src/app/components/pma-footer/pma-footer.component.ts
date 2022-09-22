@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'pma-footer',
   templateUrl: './pma-footer.component.html',

@@ -1,6 +1,14 @@
 .top-menu {
   display: flex;
   align-items: center;
+
+  h1 {
+    margin: 16px 25px;
+  }
+}
+
+mat-icon {
+  cursor: pointer;
 }
 
 .add-column-btn {

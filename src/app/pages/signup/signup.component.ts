@@ -2,11 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {first} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {FormBuilder, FormControl, Validators} from "@angular/forms";
+import {Store} from "@ngrx/store";
 
 import {KanbanService} from "../../services/kanban.service";
 import {AuthenticationService} from "../../services/authentication.service";
 import {UserPayload} from "../../models/user";
-import {FormBuilder, FormControl, Validators} from "@angular/forms";
+import * as globalActions from "../../store/actions/global.actions";
+import * as fromRoot from "../../store/reducers/global.reducer";
 
 
 @Component({
@@ -24,7 +27,8 @@ export class SignupComponent implements OnInit {
               private authenticationService: AuthenticationService,
               private snackBar: MatSnackBar,
               private router: Router,
-              private formBuilder: FormBuilder,) {
+              private formBuilder: FormBuilder,
+              private store: Store<fromRoot.AppState>) {
     if (this.authenticationService.currentTokenValue) {
       this.router.navigate(['/']);
     }
@@ -33,18 +37,17 @@ export class SignupComponent implements OnInit {
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
       name: ['', [Validators.required]],
-      // name1: ['', [Validators.required]],
       login: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(4)]]
     });
   }
 
   onSubmit() {
-    // this.submitted = true;
-    // this.loading = true;
     if (this.signupForm.invalid) {
       return;
     }
+
+    this.store.dispatch(globalActions.setLoadingState({ isLoading: true }));
 
     this.kanbanService.signUp({
       name: this.signupForm.controls.name.value,
@@ -57,14 +60,16 @@ export class SignupComponent implements OnInit {
             duration: 5000,
             verticalPosition: 'top'
           });
-        this.router.navigate(['/login']);
-      },
-      error => {
-        this.snackBar.open(error.toString(), 'close',{
-          duration: 5000,
-          verticalPosition: 'top'
+          this.router.navigate(['/login']);
+          this.store.dispatch(globalActions.setLoadingState({ isLoading: false }));
+        },
+        error => {
+          this.snackBar.open(error.toString(), 'close',{
+            duration: 5000,
+            verticalPosition: 'top'
+          });
+          this.store.dispatch(globalActions.setLoadingState({ isLoading: false }));
         });
-      });
   }
 
 }

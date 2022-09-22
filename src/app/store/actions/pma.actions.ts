@@ -4,6 +4,7 @@ import {Column, ColumnPayload} from "../../models/column.model";
 import { Task, TaskPayload } from "../../models/task.model";
 import {UserPayload} from "../../models/user";
 
+// probably it's better to split actions into several files, according to corresponding pages logic
 
 export const loadBoards = createAction('[Boards] Load');
 export const loadBoardsSuccess = createAction('[Boards] Load Success', props<{ boards: Board[] }>());
@@ -20,10 +21,6 @@ export const deleteBoardFailed = createAction('[Boards] Delete Board Failed', pr
 export const loadColumns = createAction('[Columns] Load Columns', props<{boardId: string}>());
 export const loadColumnsSuccess = createAction('[Columns] Load Columns Success', props<{boardId: string, columns: Column[]}>());
 export const loadColumnsFailed = createAction('[Columns] Load Columns Failed', props<{ payload: {err: string} }>());
-
-// export const loadColumnDetails = createAction('[Columns] Load Column Details', props<{boardId: string, columnId: string}>());
-// export const loadColumnDetailsSuccess = createAction('[Columns] Load Column Details Success', props<{column: ColumnDetails}>());
-// export const loadColumnDetailsFailed = createAction('[Columns] Load Column Details Failed');
 
 export const addColumn = createAction('[Columns] Add Column', props<{boardId: string, column: ColumnPayload}>());
 export const addColumnSuccess = createAction('[Columns] Add Column Success', props<{column: Column}>());
@@ -56,7 +53,3 @@ export const updateTaskFailed = createAction('[Tasks] Update Task Failed', props
 export const updateUser = createAction('[User] Update User', props<{userId: string, user: UserPayload}>());
 export const updateUserSuccess = createAction('[User] Update User Success', props<{user: UserPayload}>());
 export const updateUserFailed = createAction('[User] Update User Failed', props<{ payload: {err: string} }>());
-
-export const setLoadingState = createAction('[App] Set loading', props<{ isLoading: boolean }>());
-
-// probably it's better to split actions into several files, according to corresponding pages logic

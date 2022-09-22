@@ -20,8 +20,6 @@ export class AddTaskDialogComponent implements OnInit {
     this.dialogTitle = data.dialogTitle;
     this.taskTitle.setValue(data.title);
     this.taskDescription.setValue(data.description);
-    // this.title = data.title;
-    // this.description = data.description;
   }
 
   ngOnInit(): void {

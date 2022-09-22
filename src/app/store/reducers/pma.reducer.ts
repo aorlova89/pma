@@ -101,22 +101,3 @@ export const getTasks = createSelector(
   getAppState,
   (state: AppState) => state.tasks
 );
-//
-// export const selectTasks = (state: AppState) => state.tasks;
-//
-// // export const getTasksById = (taskId: string) =>
-// //   createSelector(
-// //     selectTasks,
-// //     (tasks) =>
-// //       tasks.map(el => el.id === taskId)
-// //   )
-
-export const getCurrentBoardId = createSelector(
-  getAppState,
-  (state: AppState) => state.currentBoardId
-);
-//
-// export const getIsLoading = createSelector(
-//   getAppState,
-//   (state) => state.isLoading
-// );

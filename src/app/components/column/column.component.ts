@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {ActivatedRoute, Params} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {MatDialog} from "@angular/material/dialog";
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 
 import {ConfirmDialogModel, ModalComponent} from "../modal/modal.component";
 import {AddTaskDialogComponent} from "../add-task-dialog/add-task-dialog.component";
@@ -11,8 +12,6 @@ import {AuthenticationService} from "../../services/authentication.service";
 import {KanbanService} from "../../services/kanban.service";
 import * as reducer from "../../store/reducers/pma.reducer";
 import * as AppActions from "../../store/actions/pma.actions";
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
-import {Observable} from "rxjs";
 
 
 @Component({
@@ -144,28 +143,6 @@ export class ColumnComponent implements OnInit {
         this.store.dispatch(AppActions.deleteTask({boardId: this.boardId, columnId: this.column.id, taskId: task.id}));
       }
     })
-  }
-
-  drop1(event: CdkDragDrop<Task[]>) {
-    moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
-
-    this.tasks.forEach((task, index) => {
-        this.store.dispatch(
-          AppActions.updateTask({
-            boardId: this.boardId,
-            columnId: this.column.id,
-            taskId: task.id,
-            task: {
-              title: task.title,
-              description: task.description,
-              userId: this.currentUserId,
-              order: index + 1,
-              boardId: this.boardId,
-              columnId: this.column.id
-            }
-          }))
-      }
-    )
   }
 
   drop(event: CdkDragDrop<Task[]>) {

@@ -17,14 +17,4 @@ main {
   right: 0;
 }
 
-column {
-  height: 100%;
-  margin-right: 20px;
-  overflow: hidden;
-}
-
-.err-msg {
-  color: red;
-}
-
 /*# sourceMappingURL=app.component.css.map */

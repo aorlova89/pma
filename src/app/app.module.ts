@@ -37,8 +37,6 @@ import {ColumnComponent} from './components/column/column.component';
 import {ColumnsListComponent} from './components/columns-list/columns-list.component';
 import {AddColumnDialogComponent} from './components/add-column-dialog/add-column-dialog.component';
 import {AddTaskDialogComponent} from './components/add-task-dialog/add-task-dialog.component';
-import {TmpComponent} from './components/tmp/tmp.component';
-import {TmpTitleComponent} from './components/tmp-title/tmp-title.component';
 import {LoadingSpinnerComponent} from './components/loading-spinner/loading-spinner.component';
 
 import {AppEffects} from "./store/effects/pma.effects";
@@ -70,8 +68,6 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     ColumnsListComponent,
     AddColumnDialogComponent,
     AddTaskDialogComponent,
-    TmpComponent,
-    TmpTitleComponent,
     LoadingSpinnerComponent
   ],
   imports: [
@@ -79,7 +75,6 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     AppRoutingModule,
     BrowserAnimationsModule,
     MatCardModule,
-    // StoreModule.forFeature('pma', appReducer),
     StoreModule.forRoot({pma: appReducer, app: globalReducer}),
     EffectsModule.forRoot([AppEffects]),
     EffectsModule.forFeature([AppEffects]),
