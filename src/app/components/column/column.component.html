@@ -6,7 +6,7 @@
       <input matInput [(ngModel)]="columnTitle" class="input">
     </mat-form-field>
     <div id="icons" [ngClass]="editable ? 'icons-visible' : 'icons-hidden'">
-      <mat-icon id="save-update" matTooltip="Update column Title">check</mat-icon>
+      <mat-icon id="save-update" matTooltip="Update column title">check</mat-icon>
       <mat-icon id="cancel-update" matTooltip="Cancel changes">close</mat-icon>
     </div>
   </div>
@@ -15,15 +15,11 @@
     cdkDropList
     (cdkDropListDropped)="drop($event)"
     [cdkDropListData]="tasks"
-    #tasksList="cdkDropList"
     [cdkDropListConnectedTo]="columnIds"
     class="tasks-list"
     id={{column.id}}
   >
-    <div
-      *ngFor="let task of tasks"
-      cdkDrag
-    >
+    <div *ngFor="let task of tasks" cdkDrag>
       <mat-card class="task" *ngIf="task.columnId === column.id" (click)="onTaskClick(task)">
         {{task.title}}
         <mat-icon class="delete-task" matTooltip="Delete task" (click)="onDeleteTask($event, task)">delete</mat-icon>
@@ -31,29 +27,3 @@
     </div>
   </mat-card-content>
 </mat-card>
-
-<!--<mat-card-content-->
-<!--  cdkDropList-->
-<!--  (cdkDropListDropped)="drop($event)"-->
-<!--  [cdkDropListData]="tasks"-->
-<!--  #tasksList="cdkDropList"-->
-<!--  [cdkDropListConnectedTo]="[tasksList]"-->
-<!--  class="tasks-list"-->
-<!--&gt;-->
-
-<!--<div class="col-md-3" *ngFor="let week of weeks">-->
-<!--  <div class="drag-container">-->
-<!--    <div class="section-heading">Week {{week.id}}</div>-->
-
-<!--    <div-->
-<!--      cdkDropList-->
-<!--      id="{{week.id}}"-->
-<!--      [cdkDropListData]="week.weeklist"-->
-<!--      [cdkDropListConnectedTo]="connectedTo"-->
-<!--      class="item-list"-->
-<!--      (cdkDropListDropped)="drop($event)">-->
-
-<!--      <div class="item-box" *ngFor="let weekItem of week.weeklist" cdkDrag>Week {{week.id}} {{weekItem}}</div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->

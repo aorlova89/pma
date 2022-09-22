@@ -1,7 +1,6 @@
 <mat-card class="board-card" (click)="onBoardOpen(boardCard)">
   <mat-card-title>{{boardCard.title}}</mat-card-title>
   <mat-card-content class="board-icons">
-<!--    <mat-icon>edit</mat-icon>-->
     <mat-icon (click)="onDeleteBoard($event, boardCard)">delete</mat-icon>
   </mat-card-content>
 </mat-card>
